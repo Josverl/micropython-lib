@@ -5,7 +5,8 @@ MIT license; Copyright (c) 2018-2019 Damien P. George
 
 Supported modes: server & client, TCP & UDP, normal & reverse
 
-Usage:
+Usage::
+
     import iperf3
     iperf3.server()
     iperf3.client('192.168.1.5')
