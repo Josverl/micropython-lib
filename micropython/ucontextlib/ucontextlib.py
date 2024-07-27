@@ -78,7 +78,7 @@ class _GeneratorContextManager(ContextDecorator):
 def contextmanager(func):
     """@contextmanager decorator.
 
-    Typical usage:
+    Typical usage::
 
         @contextmanager
         def some_generator(<arguments>):
@@ -88,12 +88,12 @@ def contextmanager(func):
             finally:
                 <cleanup>
 
-    This makes this:
+    This makes this::
 
         with some_generator(<arguments>) as <variable>:
             <body>
 
-    equivalent to this:
+    equivalent to this::
 
         <setup>
         try:
