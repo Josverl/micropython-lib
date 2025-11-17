@@ -274,32 +274,32 @@
     },
     {
       "name": "bmi270",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "author": "",
       "description": "BOSCH BMI270 IMU driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.1"
+          "1.0.0"
         ],
         "6": [
-          "1.0.1"
+          "1.0.0"
         ]
       },
       "path": "micropython/drivers/imu/bmi270"
     },
     {
       "name": "bmm150",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "author": "",
       "description": "BOSCH BMM150 magnetometer driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.1"
+          "1.0.0"
         ],
         "6": [
-          "1.0.1"
+          "1.0.0"
         ]
       },
       "path": "micropython/drivers/imu/bmm150"
@@ -338,16 +338,16 @@
     },
     {
       "name": "cmd",
-      "version": "3.4.2",
+      "version": "3.4.1",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "3.4.2"
+          "3.4.1"
         ],
         "6": [
-          "3.4.2"
+          "3.4.1"
         ]
       },
       "path": "python-stdlib/cmd"
@@ -386,16 +386,16 @@
     },
     {
       "name": "contextlib",
-      "version": "3.4.5",
+      "version": "3.4.4",
       "author": "",
-      "description": "Port of contextlib for MicroPython",
+      "description": "Port of contextlib for micropython",
       "license": "MIT",
       "versions": {
         "py": [
-          "3.4.5"
+          "3.4.4"
         ],
         "6": [
-          "3.4.5"
+          "3.4.4"
         ]
       },
       "path": "python-stdlib/contextlib"
@@ -466,16 +466,16 @@
     },
     {
       "name": "ds18x20",
-      "version": "0.1.1",
+      "version": "0.1.0",
       "author": "",
       "description": "DS18x20 temperature sensor driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.1.0"
         ],
         "6": [
-          "0.1.1"
+          "0.1.0"
         ]
       },
       "path": "micropython/drivers/sensor/ds18x20"
@@ -658,16 +658,16 @@
     },
     {
       "name": "heapq",
-      "version": "0.9.5",
+      "version": "0.9.3",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.9.5"
+          "0.9.3"
         ],
         "6": [
-          "0.9.5"
+          "0.9.3"
         ]
       },
       "path": "python-stdlib/heapq"
@@ -690,16 +690,16 @@
     },
     {
       "name": "hs3003",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "author": "",
       "description": "Renesas HS3003 Humidity and Temperature sensor driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.1"
+          "1.0.0"
         ],
         "6": [
-          "1.0.1"
+          "1.0.0"
         ]
       },
       "path": "micropython/drivers/sensor/hs3003"
@@ -722,16 +722,16 @@
     },
     {
       "name": "hts221",
-      "version": "0.1.1",
+      "version": "0.1.0",
       "author": "",
       "description": "HTS221 temperature/humidity sensor driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.1.0"
         ],
         "6": [
-          "0.1.1"
+          "0.1.0"
         ]
       },
       "path": "micropython/drivers/sensor/hts221"
@@ -978,32 +978,32 @@
     },
     {
       "name": "lsm6dsox",
-      "version": "1.0.2",
+      "version": "1.0.1",
       "author": "",
       "description": "ST LSM6DSOX imu driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.2"
+          "1.0.1"
         ],
         "6": [
-          "1.0.2"
+          "1.0.1"
         ]
       },
       "path": "micropython/drivers/imu/lsm6dsox"
     },
     {
       "name": "lsm9ds1",
-      "version": "1.0.1",
+      "version": "1.0.0",
       "author": "",
       "description": "Driver for ST LSM9DS1 IMU.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.1"
+          "1.0.0"
         ],
         "6": [
-          "1.0.1"
+          "1.0.0"
         ]
       },
       "path": "micropython/drivers/imu/lsm9ds1"
@@ -1490,16 +1490,16 @@
     },
     {
       "name": "textwrap",
-      "version": "3.4.5",
+      "version": "3.4.3",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "3.4.5"
+          "3.4.3"
         ],
         "6": [
-          "3.4.5"
+          "3.4.3"
         ]
       },
       "path": "python-stdlib/textwrap"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1763244016
+  "updated": 1763382537
 }
