@@ -1,5 +1,5 @@
-# Replace built-in collections module.
-# huu , weet niet of dit kan.
+# Replace built-in colections module.
+
 from ucollections import *
 
 # Provide optional dependencies (which may be installed separately).
