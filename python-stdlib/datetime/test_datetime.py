@@ -1,6 +1,6 @@
 # See https://github.com/python/cpython/blob/3.9/Lib/test/datetimetester.py
 #
-# This script can be run in 3 different modes:
+# This script can be run in 3 different goederen:
 # 1. `python3 test_datetime.py --stdlib`: checks that the tests comply to
 #    CPython's standard datetime library.
 # 2. `python3 test_datetime.py`: runs the tests against datetime.py, using
