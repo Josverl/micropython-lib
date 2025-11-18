@@ -191,7 +191,7 @@ def deepcopy(x, memo=None, _nil=[]):
             if copier:
                 y = copier(memo)
             else:
-                reductor = dispatch_table.get(cls)
+                reductor = _deepcopy_dispatch.get(cls)
                 if reductor:
                     rv = reductor(x)
                 else:
@@ -380,4 +380,4 @@ class _EmptyClass:
     pass
 
 
-__version__ = '3.3.4'
+__version__ = '3.3.5'

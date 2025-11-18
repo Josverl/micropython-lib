@@ -402,16 +402,16 @@
     },
     {
       "name": "copy",
-      "version": "3.3.4",
+      "version": "3.3.5",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "3.3.4"
+          "3.3.5"
         ],
         "6": [
-          "3.3.4"
+          "3.3.5"
         ]
       },
       "path": "python-stdlib/copy"
@@ -1026,16 +1026,16 @@
     },
     {
       "name": "mip",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "author": "",
       "description": "On-device package installer for network-capable boards",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.4.1"
+          "0.4.2"
         ],
         "6": [
-          "0.4.1"
+          "0.4.2"
         ]
       },
       "path": "micropython/mip"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1763485012
+  "updated": 1763486623
 }
