@@ -1298,16 +1298,16 @@
     },
     {
       "name": "requests",
-      "version": "0.10.1",
+      "version": "0.10.3",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.10.1"
+          "0.10.3"
         ],
         "6": [
-          "0.10.1"
+          "0.10.3"
         ]
       },
       "path": "python-ecosys/requests"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1763486623
+  "updated": 1763487322
 }
