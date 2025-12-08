@@ -178,16 +178,16 @@
     },
     {
       "name": "aiohttp",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "author": "",
       "description": "HTTP client module for MicroPython asyncio module",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.0.6"
+          "0.0.7"
         ],
         "6": [
-          "0.0.6"
+          "0.0.7"
         ]
       },
       "path": "python-ecosys/aiohttp"
@@ -210,16 +210,16 @@
     },
     {
       "name": "argparse",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.4.0"
+          "0.5.0"
         ],
         "6": [
-          "0.4.0"
+          "0.5.0"
         ]
       },
       "path": "python-stdlib/argparse"
@@ -738,16 +738,16 @@
     },
     {
       "name": "inspect",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.2.0"
+          "0.2.1"
         ],
         "6": [
-          "0.2.0"
+          "0.2.1"
         ]
       },
       "path": "python-stdlib/inspect"
@@ -770,16 +770,16 @@
     },
     {
       "name": "iperf3",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.4"
+          "0.1.5"
         ],
         "6": [
-          "0.1.4"
+          "0.1.5"
         ]
       },
       "path": "python-ecosys/iperf3"
@@ -1442,16 +1442,16 @@
     },
     {
       "name": "tarfile",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "author": "",
       "description": "Read-only implementation of Python's tarfile.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.4.1"
+          "0.4.2"
         ],
         "6": [
-          "0.4.1"
+          "0.4.2"
         ]
       },
       "path": "python-stdlib/tarfile"
@@ -1634,16 +1634,16 @@
     },
     {
       "name": "umqtt.simple",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "author": "",
       "description": "Lightweight MQTT client for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.6.0"
+          "1.7.0"
         ],
         "6": [
-          "1.6.0"
+          "1.7.0"
         ]
       },
       "path": "micropython/umqtt.simple"
@@ -1762,16 +1762,16 @@
     },
     {
       "name": "usb-device-hid",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.1.2"
         ],
         "6": [
-          "0.1.1"
+          "0.1.2"
         ]
       },
       "path": "micropython/usb/usb-device-hid"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1765114842
+  "updated": 1765152224
 }
