@@ -1,0 +1,1 @@
+{"v":1,"hashes":[["debugpy/__init__.py","01553d3f"],["debugpy/public_api.py","90de1af5"],["debugpy/server/debug_session.py","6fff90d8"],["debugpy/server/pdb_adapter.py","06e4ea5a"],["debugpy/server/__init__.py","d226d230"],["debugpy/common/constants.py","1751852f"],["debugpy/common/messaging.py","6ec38bfd"],["debugpy/common/__init__.py","1727a452"]],"version":"0.1.0"}

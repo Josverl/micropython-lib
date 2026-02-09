@@ -1,0 +1,1 @@
+{"v":1,"hashes":[["debugpy/__init__.mpy","a921d194"],["debugpy/public_api.mpy","71c2428f"],["debugpy/server/debug_session.mpy","0b37da3c"],["debugpy/server/pdb_adapter.mpy","39feccc1"],["debugpy/server/__init__.mpy","9f57d1d6"],["debugpy/common/constants.mpy","1d640c17"],["debugpy/common/messaging.mpy","aa42e1e1"],["debugpy/common/__init__.mpy","6449e93f"]],"version":"0.1.0"}
