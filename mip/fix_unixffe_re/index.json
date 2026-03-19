@@ -978,16 +978,16 @@
     },
     {
       "name": "lsm6dsox",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "author": "",
       "description": "ST LSM6DSOX imu driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.1"
+          "1.1.0"
         ],
         "6": [
-          "1.0.1"
+          "1.1.0"
         ]
       },
       "path": "micropython/drivers/imu/lsm6dsox"
@@ -1314,16 +1314,16 @@
     },
     {
       "name": "sdcard",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "author": "",
       "description": "SDCard block device driver.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.2.0"
         ],
         "6": [
-          "0.1.1"
+          "0.2.0"
         ]
       },
       "path": "micropython/drivers/storage/sdcard"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1773911409
+  "updated": 1773920049
 }
