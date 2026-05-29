@@ -2,16 +2,16 @@
   "packages": [
     {
       "name": "__future__",
-      "version": "1.26.1",
+      "version": "0.1.1",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.26.1"
+          "0.1.1"
         ],
         "6": [
-          "1.26.1"
+          "0.1.1"
         ]
       },
       "path": "python-stdlib/__future__"
@@ -2018,5 +2018,5 @@
     }
   ],
   "v": 2,
-  "updated": 1780063675
+  "updated": 1780064440
 }
