@@ -22,9 +22,7 @@ class __Ignore:
         return __ignore
 
     def __getattr__(self, key):
-        if key in self.__dict__:
-            return self.__dict__[key]
-        return __ignore
+        return self.__dict__.get(key, __ignore)
 
 
 __ignore = __Ignore()
@@ -65,9 +63,9 @@ cast = NewType # saves bytes, and is semantically similar
 #     return arg
 no_type_check = final # saves bytes, and is semantically similar
 
-# -------------------
-# less useful methods
-# -------------------
+# -----------------
+# less used methods
+# -----------------
 
 # def reveal_type(x):  # ( 38 bytes)
 # #     # https://docs.python.org/3/library/typing.html#typing.reveal_type
@@ -75,6 +73,8 @@ no_type_check = final # saves bytes, and is semantically similar
 # or for smaller size:
 reveal_type = final # saves bytes, and is semantically similar
 
+# The get_origin behaviour is # already implemented by the __getattr__ 
+# method of __Ignore, which passess the current test suite.
 
 # def get_origin(type):  # ( 23 bytes)
 #     # https://docs.python.org/3/library/typing.html#typing.get_origin

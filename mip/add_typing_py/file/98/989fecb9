@@ -284,11 +284,7 @@ class TestRunner:
             extras.append("expected failures=%d" % res.expectedFailuresNum)
         if res.unexpectedSuccessesNum > 0:
             extras.append("unexpected successes=%d" % res.unexpectedSuccessesNum)
-        if (
-            res.failuresNum > 0
-            or res.errorsNum > 0
-            or res.unexpectedSuccessesNum > 0
-        ):
+        if (res.failuresNum + res.errorsNum + res.unexpectedSuccessesNum) > 0:
             parts = [
                 "failures=%d" % res.failuresNum,
                 "errors=%d" % res.errorsNum,
