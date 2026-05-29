@@ -30,13 +30,10 @@ __ignore = __Ignore()
 # typing essentials
 # -----------------
 TYPE_CHECKING = False
-
-def final(value):  # ( 6 +  bytes)
-    # decorator to indicate that a method should not be overridden
-    # https://docs.python.org/3/library/typing.html#typing.final
+def reveal_type(value):
     return value
 
-override = final # saves bytes, and is semantically similar
+override = final = reveal_type # saves bytes, and is semantically similar
 
 # def overload(arg):  # ( 27 bytes)
 #     # ignore functions signatures with @overload decorator
@@ -48,9 +45,13 @@ def NewType(_, value):  # (21 bytes)
     # MicroPython: just use the original type.
     return value
 
+def TypeVar(key, *types, bound = None, covariant=False, contravariant=False, infer_variance=False):
+    return key
 # ---------------
 #  useful methods
 # ---------------
+# is semantically similar
+TypeVarTuple = final
 
 # https://docs.python.org/3/library/typing.html#typing.cast
 # def cast(type, arg):  # ( 23 bytes)
