@@ -946,16 +946,16 @@
     },
     {
       "name": "lora-sx126x",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.5"
+          "0.1.6"
         ],
         "6": [
-          "0.1.5"
+          "0.1.6"
         ]
       },
       "path": "micropython/lora/lora-sx126x"
@@ -1058,16 +1058,16 @@
     },
     {
       "name": "mip",
-      "version": "0.4.2",
+      "version": "0.5.0",
       "author": "",
       "description": "On-device package installer for network-capable boards",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.4.2"
+          "0.5.0"
         ],
         "6": [
-          "0.4.2"
+          "0.5.0"
         ]
       },
       "path": "micropython/mip"
@@ -1714,16 +1714,16 @@
     },
     {
       "name": "unittest",
-      "version": "0.10.4",
+      "version": "0.10.5",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.10.4"
+          "0.10.5"
         ],
         "6": [
-          "0.10.4"
+          "0.10.5"
         ]
       },
       "path": "python-stdlib/unittest"
@@ -1826,16 +1826,16 @@
     },
     {
       "name": "usb-device-hid",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.2"
+          "0.2.0"
         ],
         "6": [
-          "0.1.2"
+          "0.2.0"
         ]
       },
       "path": "micropython/usb/usb-device-hid"
@@ -2018,5 +2018,5 @@
     }
   ],
   "v": 2,
-  "updated": 1779918605
+  "updated": 1780053892
 }
