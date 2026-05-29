@@ -1,9 +1,0 @@
-class ABC:
-    pass
-
-
-def abstractmethod(f):
-    return f
-
-
-__version__ = '0.1.0'
