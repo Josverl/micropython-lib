@@ -322,16 +322,16 @@
     },
     {
       "name": "bundle-typing",
-      "version": "1.26.1",
+      "version": "1.0.0",
       "author": "",
       "description": "Limited runtime typing support for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.26.1"
+          "1.0.0"
         ],
         "6": [
-          "1.26.1"
+          "1.0.0"
         ]
       },
       "path": "micropython/bundles/bundle-typing"
@@ -2018,5 +2018,5 @@
     }
   ],
   "v": 2,
-  "updated": 1780092576
+  "updated": 1780337097
 }
