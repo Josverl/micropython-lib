@@ -36,6 +36,7 @@ def final(value):  # ( 6 +  bytes)
     # https://docs.python.org/3/library/typing.html#typing.final
     return value
 
+override = final # saves bytes, and is semantically similar
 
 # def overload(arg):  # ( 27 bytes)
 #     # ignore functions signatures with @overload decorator
@@ -86,6 +87,18 @@ def get_args(_):  # ( 22 bytes)
     # Python 3.8+ only
     return ()
 
+# https://typing.python.org/en/latest/spec/typeddict.html
+# make TypedDict dict-like at runtime.
+TypedDict = dict 
+
+class IO:
+    pass
+class TextIO:
+    pass
+class BinaryIO:
+    pass
+
+AnyStr=str
 
 # ref: https://github.com/micropython/micropython-lib/pull/584#issuecomment-2317690854
 def __getattr__(key):
@@ -94,3 +107,4 @@ def __getattr__(key):
 # snarky way to alias typing_extensions to typing ( saving 59 bytes)
 import sys
 sys.modules["typing_extensions"] = sys.modules["typing"]
+del sys
