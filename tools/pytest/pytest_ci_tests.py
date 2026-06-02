@@ -155,7 +155,9 @@ def _register_unittest_path_tests():
             unittest_path=unittest_path,
             case_targets=case_targets,
         )
-        def _test(run_micropython_raw, run_micropython, unittest_target, _unittest_path=unittest_path):
+        def _test(
+            run_micropython_raw, run_micropython, unittest_target, _unittest_path=unittest_path
+        ):
             if unittest_target is None:
                 # default mode mirrors tools/ci.sh: run unittest once per path.
                 run_micropython("-m", "unittest", cwd=REPO_ROOT / _unittest_path)
@@ -167,7 +169,6 @@ def _register_unittest_path_tests():
         _test.__name__ = test_name
         _test.__doc__ = unittest_path
         globals()[test_name] = _test
-
 
 
 @pytest.mark.parametrize("test_path", SCRIPT_TESTS)

@@ -96,7 +96,9 @@ def _split_failure_sections(stdout: str) -> list[str]:
 
 
 def _failure_case_from_section(section: str) -> tuple[str | None, str | None]:
-    fail_match = re.search(r"^FAIL:\s+(test\S+)\s+<(class|function)\s+'([^']+)'", section, re.MULTILINE)
+    fail_match = re.search(
+        r"^FAIL:\s+(test\S+)\s+<(class|function)\s+'([^']+)'", section, re.MULTILINE
+    )
     if not fail_match:
         return None, None
 
@@ -143,8 +145,7 @@ def _build_per_case_rerun_hints(stdout: str) -> list[str]:
 
         k_expr = f"{test_function_name} and {chosen_filename} and {case_id}"
         k_commands.append(
-            "uv run pytest --per-test-case -q tools/pytest/pytest_ci_tests.py "
-            + f'-k "{k_expr}"'
+            "uv run pytest --per-test-case -q tools/pytest/pytest_ci_tests.py " + f'-k "{k_expr}"'
         )
 
     # Keep order stable while removing duplicates.
@@ -167,6 +168,13 @@ def _micropython_path() -> Path:
     return repo_path / "ports/unix/build-standard/micropython"
 
 
+def _existing_micropython_executable() -> Path | None:
+    micropython_path = _micropython_path()
+    if micropython_path.exists() and os.access(micropython_path, os.X_OK):
+        return micropython_path
+    return None
+
+
 @pytest.fixture(scope="session")
 def micropython_repo() -> Path:
     repo_path = _micropython_repo_path()
@@ -187,11 +195,16 @@ def micropython_repo() -> Path:
 
 
 @pytest.fixture(scope="session")
-def micropython_build(micropython_repo) -> Path:
+def micropython_build(request) -> Path:
+    existing_micropython = _existing_micropython_executable()
+    if existing_micropython is not None:
+        return existing_micropython
+
+    micropython_repo = request.getfixturevalue("micropython_repo")
     _run_checked("make", "-C", str(micropython_repo / "mpy-cross"), "-j", "CFLAGS_EXTRA=-O0")
     _run_checked("make", "-C", str(micropython_repo / "ports/unix"), "submodules")
     _run_checked("make", "-C", str(micropython_repo / "ports/unix"), "-j", "CFLAGS_EXTRA=-O0")
-    return DEFAULT_MICROPYTHON
+    return _micropython_path()
 
 
 @pytest.fixture(scope="session")
@@ -217,8 +230,8 @@ def package_test_environment(micropython_build, package_test_lib_setup):
 
 @pytest.fixture(scope="session")
 def micropython_executable(package_test_environment) -> str:
-    path = _micropython_path()
-    if not path.exists():
+    path = _existing_micropython_executable()
+    if path is None:
         pytest.skip(
             "MicroPython executable not found. "
             "Set MICROPYTHON or build at /tmp/micropython/ports/unix/build-standard/micropython."
@@ -259,11 +272,7 @@ def run_micropython(run_micropython_raw, micropython_executable):
             rerun_k_hints = _build_per_case_rerun_hints(completed.stdout)
             hints_block = ""
             if rerun_k_hints:
-                hints_block = (
-                    "\nPer-case rerun commands (-k):\n"
-                    + "\n".join(rerun_k_hints)
-                    + "\n"
-                )
+                hints_block = "\nPer-case rerun commands (-k):\n" + "\n".join(rerun_k_hints) + "\n"
             pytest.fail(
                 "MicroPython command failed\n"
                 + f"cwd: {cwd}\n"
