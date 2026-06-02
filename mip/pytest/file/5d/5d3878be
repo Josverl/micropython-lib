@@ -75,7 +75,7 @@ no_type_check = final # saves bytes, and is semantically similar
 reveal_type = final # saves bytes, and is semantically similar
 
 # The get_origin behaviour is # already implemented by the __getattr__ 
-# method of __Ignore, which passess the current test suite.
+# method of __Ignore, which passes the current test suite.
 
 # def get_origin(type):  # ( 23 bytes)
 #     # https://docs.python.org/3/library/typing.html#typing.get_origin
