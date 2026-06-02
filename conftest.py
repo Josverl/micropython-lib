@@ -6,7 +6,43 @@ from pathlib import Path
 import pytest
 
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+def pytest_addoption(parser):
+    parser.addoption(
+        "--per-test-case",
+        action="store_true",
+        default=False,
+        help=(
+            "Run each MicroPython unittest case individually via the unittest adapter "
+            "(granular pass/fail/skip per method, but slower due to one MicroPython "
+            "invocation per case). Default: run the whole file in one invocation."
+        ),
+    )
+
+
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers",
+        "micropython_unittest_path(test_path, cases): "
+        "internal marker carrying per-path unittest metadata for pytest_generate_tests",
+    )
+
+
+def pytest_generate_tests(metafunc):
+    if "unittest_target" not in metafunc.fixturenames:
+        return
+    marker = metafunc.definition.get_closest_marker("micropython_unittest_path")
+    if not marker:
+        return
+    test_path = marker.kwargs["test_path"]
+    cases = marker.kwargs["cases"]
+    if metafunc.config.getoption("--per-test-case"):
+        metafunc.parametrize("unittest_target", cases, ids=cases)
+    else:
+        filename = test_path.rsplit("/", 1)[-1]
+        metafunc.parametrize("unittest_target", [None], ids=[filename])
+
+
+REPO_ROOT = Path(__file__).resolve().parent
 DEFAULT_MICROPYTHON_REPO = Path("/tmp/micropython")
 DEFAULT_MICROPYTHON = DEFAULT_MICROPYTHON_REPO / "ports/unix/build-standard/micropython"
 
@@ -105,7 +141,21 @@ def micropython_executable(package_test_environment) -> str:
 
 
 @pytest.fixture(scope="session")
-def run_micropython(micropython_executable):
+def run_micropython_raw(micropython_executable):
+    def _run(*args, cwd: Path):
+        return subprocess.run(
+            [micropython_executable, *args],
+            cwd=str(cwd),
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+    return _run
+
+
+@pytest.fixture(scope="session")
+def run_micropython(run_micropython_raw, micropython_executable):
     def _skip_reason(completed: subprocess.CompletedProcess[str]) -> str | None:
         for stream in (completed.stdout, completed.stderr):
             for line in stream.splitlines():
@@ -115,13 +165,7 @@ def run_micropython(micropython_executable):
         return None
 
     def _run(*args, cwd: Path):
-        completed = subprocess.run(
-            [micropython_executable, *args],
-            cwd=str(cwd),
-            text=True,
-            capture_output=True,
-            check=False,
-        )
+        completed = run_micropython_raw(*args, cwd=cwd)
         skip_reason = _skip_reason(completed)
         if skip_reason is not None:
             pytest.skip(skip_reason)

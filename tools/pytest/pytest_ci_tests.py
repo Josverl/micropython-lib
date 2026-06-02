@@ -1,9 +1,13 @@
+import ast
+import re
+import warnings
 from pathlib import Path
 
 import pytest
 
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[2]  # tools/pytest/ -> repo root
+UNITTEST_ADAPTER = Path("tools/pytest/micropython_unittest_adapter.py")
 DISCOVERED_TEST_ROOTS = [
     "micropython",
     "python-ecosys",
@@ -91,7 +95,97 @@ def _discover_tests() -> list[str]:
     return discovered_tests
 
 
+def _discover_unittest_tests() -> list[str]:
+    unittest_tests = []
+    for test_path in UNITTEST_PATHS:
+        root_path = REPO_ROOT / test_path
+        for module_path in sorted(root_path.rglob("test*.py")):
+            unittest_tests.append(module_path.relative_to(REPO_ROOT).as_posix())
+    return unittest_tests
+
+
+def _discover_unittest_cases_by_path() -> dict[str, list[str]]:
+    unittest_cases_by_path = {}
+    for test_path in _discover_unittest_tests():
+        file_path = REPO_ROOT / test_path
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", SyntaxWarning)
+            tree = ast.parse(file_path.read_text())
+
+        cases = []
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef) and node.name.startswith("test"):
+                cases.append(node.name)
+            if isinstance(node, ast.ClassDef):
+                for item in node.body:
+                    if isinstance(item, ast.FunctionDef) and item.name.startswith("test"):
+                        cases.append(f"{node.name}.{item.name}")
+
+        if cases:
+            unittest_cases_by_path[test_path] = cases
+
+    return unittest_cases_by_path
+
+
+def _sanitize_name(text: str) -> str:
+    return re.sub(r"[^0-9A-Za-z_]+", "_", text).strip("_")
+
+
+def _first_skip_line(*streams: str) -> str | None:
+    for stream in streams:
+        for line in stream.splitlines():
+            if " skipped:" in line:
+                return line.strip()
+    return None
+
+
 DISCOVERED_TESTS = _discover_tests()
+UNITTEST_CASES_BY_PATH = _discover_unittest_cases_by_path()
+
+
+def _run_unittest_case(run_micropython_raw, test_path, test_case):
+    completed = run_micropython_raw(
+        str(UNITTEST_ADAPTER),
+        "--file",
+        test_path,
+        "--case",
+        test_case,
+        cwd=REPO_ROOT,
+    )
+
+    if completed.returncode == 5:
+        skip_line = _first_skip_line(completed.stdout, completed.stderr)
+        pytest.skip(skip_line or "MicroPython unittest case skipped")
+
+    if completed.returncode != 0:
+        pytest.fail(
+            "MicroPython unittest case failed\n"
+            + f"case: {test_path}::{test_case}\n"
+            + f"stdout:\n{completed.stdout}\n"
+            + f"stderr:\n{completed.stderr}"
+        )
+
+
+def _register_unittest_path_tests():
+    for test_path, cases in UNITTEST_CASES_BY_PATH.items():
+        test_name = f"test_unittest_{_sanitize_name(test_path)}"
+
+        @pytest.mark.micropython_unittest_path(test_path=test_path, cases=cases)
+        def _test(run_micropython_raw, run_micropython, unittest_target, _test_path=test_path):
+            if unittest_target is None:
+                # per-file mode: single fast invocation of the whole file
+                test_file = Path(_test_path)
+                run_micropython(
+                    "-m", "unittest", test_file.name,
+                    cwd=REPO_ROOT / test_file.parent,
+                )
+            else:
+                # per-test-case mode: one adapter invocation per case
+                _run_unittest_case(run_micropython_raw, _test_path, unittest_target)
+
+        _test.__name__ = test_name
+        _test.__doc__ = test_path
+        globals()[test_name] = _test
 
 
 
@@ -101,9 +195,7 @@ def test_micropython_script_tests(run_micropython, test_path):
     run_micropython(test_file.name, cwd=REPO_ROOT / test_file.parent)
 
 
-@pytest.mark.parametrize("test_path", UNITTEST_PATHS)
-def test_micropython_unittest_packages(run_micropython, test_path):
-    run_micropython("-m", "unittest", cwd=REPO_ROOT / test_path)
+_register_unittest_path_tests()
 
 
 @pytest.mark.parametrize("test_path,module", MODULE_TESTS)
