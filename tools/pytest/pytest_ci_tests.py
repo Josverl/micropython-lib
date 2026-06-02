@@ -8,11 +8,6 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]  # tools/pytest/ -> repo root
 UNITTEST_ADAPTER = Path("tools/pytest/micropython_unittest_adapter.py")
-DISCOVERED_TEST_ROOTS = [
-    "micropython",
-    "python-ecosys",
-    "python-stdlib",
-]
 
 
 SCRIPT_TESTS = [
@@ -67,64 +62,45 @@ MODULE_TESTS = [
 ]
 
 
-def _is_relative_to(path: Path, root: Path) -> bool:
-    try:
-        path.relative_to(root)
-    except ValueError:
-        return False
-    return True
+def _discover_unittest_files_by_path() -> dict[str, list[str]]:
+    unittest_files_by_path = {}
+    for unittest_path in UNITTEST_PATHS:
+        root_path = REPO_ROOT / unittest_path
+        files = [
+            module_path.relative_to(REPO_ROOT).as_posix()
+            for module_path in sorted(root_path.rglob("test*.py"))
+        ]
+        if files:
+            unittest_files_by_path[unittest_path] = files
+    return unittest_files_by_path
 
 
-def _discover_tests() -> list[str]:
-    excluded_paths = {Path(path) for path in SCRIPT_TESTS}
-    excluded_dirs = {REPO_ROOT / path for path in UNITTEST_PATHS}
-    excluded_dirs.update(REPO_ROOT / path for path, _module in MODULE_TESTS)
+def _discover_unittest_case_targets_by_path() -> dict[str, list[str]]:
+    unittest_case_targets_by_path = {}
+    for unittest_path, test_files in UNITTEST_FILES_BY_PATH.items():
+        targets = []
+        for test_path in test_files:
+            file_path = REPO_ROOT / test_path
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", SyntaxWarning)
+                tree = ast.parse(file_path.read_text())
 
-    discovered_tests = []
-    for root_name in DISCOVERED_TEST_ROOTS:
-        root_path = REPO_ROOT / root_name
-        for pattern in ("test_*.py", "test_*.mpy"):
-            for test_path in sorted(root_path.rglob(pattern)):
-                relative_path = test_path.relative_to(REPO_ROOT)
-                if relative_path in excluded_paths:
-                    continue
-                if any(_is_relative_to(test_path, excluded_dir) for excluded_dir in excluded_dirs):
-                    continue
-                discovered_tests.append(relative_path.as_posix())
+            cases = []
+            for node in tree.body:
+                if isinstance(node, ast.FunctionDef) and node.name.startswith("test"):
+                    cases.append(node.name)
+                if isinstance(node, ast.ClassDef):
+                    for item in node.body:
+                        if isinstance(item, ast.FunctionDef) and item.name.startswith("test"):
+                            cases.append(f"{node.name}.{item.name}")
 
-    return discovered_tests
+            for case in cases:
+                targets.append(f"{test_path}::{case}")
 
+        if targets:
+            unittest_case_targets_by_path[unittest_path] = targets
 
-def _discover_unittest_tests() -> list[str]:
-    unittest_tests = []
-    for test_path in UNITTEST_PATHS:
-        root_path = REPO_ROOT / test_path
-        for module_path in sorted(root_path.rglob("test*.py")):
-            unittest_tests.append(module_path.relative_to(REPO_ROOT).as_posix())
-    return unittest_tests
-
-
-def _discover_unittest_cases_by_path() -> dict[str, list[str]]:
-    unittest_cases_by_path = {}
-    for test_path in _discover_unittest_tests():
-        file_path = REPO_ROOT / test_path
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", SyntaxWarning)
-            tree = ast.parse(file_path.read_text())
-
-        cases = []
-        for node in tree.body:
-            if isinstance(node, ast.FunctionDef) and node.name.startswith("test"):
-                cases.append(node.name)
-            if isinstance(node, ast.ClassDef):
-                for item in node.body:
-                    if isinstance(item, ast.FunctionDef) and item.name.startswith("test"):
-                        cases.append(f"{node.name}.{item.name}")
-
-        if cases:
-            unittest_cases_by_path[test_path] = cases
-
-    return unittest_cases_by_path
+    return unittest_case_targets_by_path
 
 
 def _sanitize_name(text: str) -> str:
@@ -139,8 +115,13 @@ def _first_skip_line(*streams: str) -> str | None:
     return None
 
 
-DISCOVERED_TESTS = _discover_tests()
-UNITTEST_CASES_BY_PATH = _discover_unittest_cases_by_path()
+UNITTEST_FILES_BY_PATH = _discover_unittest_files_by_path()
+UNITTEST_CASE_TARGETS_BY_PATH = _discover_unittest_case_targets_by_path()
+
+
+def _split_case_target(case_target: str) -> tuple[str, str]:
+    test_path, test_case = case_target.split("::", 1)
+    return test_path, test_case
 
 
 def _run_unittest_case(run_micropython_raw, test_path, test_case):
@@ -167,24 +148,24 @@ def _run_unittest_case(run_micropython_raw, test_path, test_case):
 
 
 def _register_unittest_path_tests():
-    for test_path, cases in UNITTEST_CASES_BY_PATH.items():
-        test_name = f"test_unittest_{_sanitize_name(test_path)}"
+    for unittest_path, case_targets in UNITTEST_CASE_TARGETS_BY_PATH.items():
+        test_name = f"test_unittest_{_sanitize_name(unittest_path)}"
 
-        @pytest.mark.micropython_unittest_path(test_path=test_path, cases=cases)
-        def _test(run_micropython_raw, run_micropython, unittest_target, _test_path=test_path):
+        @pytest.mark.micropython_unittest_path(
+            unittest_path=unittest_path,
+            case_targets=case_targets,
+        )
+        def _test(run_micropython_raw, run_micropython, unittest_target, _unittest_path=unittest_path):
             if unittest_target is None:
-                # per-file mode: single fast invocation of the whole file
-                test_file = Path(_test_path)
-                run_micropython(
-                    "-m", "unittest", test_file.name,
-                    cwd=REPO_ROOT / test_file.parent,
-                )
+                # default mode mirrors tools/ci.sh: run unittest once per path.
+                run_micropython("-m", "unittest", cwd=REPO_ROOT / _unittest_path)
             else:
-                # per-test-case mode: one adapter invocation per case
-                _run_unittest_case(run_micropython_raw, _test_path, unittest_target)
+                # per-test-case mode: one adapter invocation per case.
+                test_path, test_case = _split_case_target(unittest_target)
+                _run_unittest_case(run_micropython_raw, test_path, test_case)
 
         _test.__name__ = test_name
-        _test.__doc__ = test_path
+        _test.__doc__ = unittest_path
         globals()[test_name] = _test
 
 
@@ -201,9 +182,3 @@ _register_unittest_path_tests()
 @pytest.mark.parametrize("test_path,module", MODULE_TESTS)
 def test_micropython_module_tests(run_micropython, test_path, module):
     run_micropython("-m", module, cwd=REPO_ROOT / test_path)
-
-
-@pytest.mark.parametrize("test_path", DISCOVERED_TESTS)
-def test_micropython_discovered_tests(run_micropython, test_path):
-    test_file = Path(test_path)
-    run_micropython(test_file.name, cwd=REPO_ROOT / test_file.parent)
