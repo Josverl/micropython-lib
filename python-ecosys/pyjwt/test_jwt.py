@@ -1,4 +1,9 @@
-import jwt
+try:
+    import jwt
+except ImportError:
+    print("SKIP: PyJWT library not available")
+    raise SystemExit(0)
+
 from time import time
 
 secret_key = "top-secret!"

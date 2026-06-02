@@ -24,7 +24,11 @@
 #
 # Note: Using the working directory shown above is easiest way to ensure 'lora' files are imported.
 #
-from lora import SX1262, SX1276
+try:
+    from lora import SX1262, SX1276
+except ImportError:
+    print("SKIP: LoRa modem driver not available")
+    raise SystemExit(0)
 
 # Allow time calculations to deviate by up to this much as a ratio
 # of the expected value (due to floating point, etc.)
