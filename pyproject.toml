@@ -109,3 +109,12 @@ max-statements = 166
 
 # ble multitests are evaluated with some names pre-defined
 "micropython/bluetooth/aioble/multitests/*" = ["F821"]
+
+[tool.pytest.ini_options]
+# Restrict pytest collection to wrapper tests that execute MicroPython scripts.
+testpaths = [
+  "tools/pytest",
+]
+python_files = [
+  "pytest_*.py",
+]
