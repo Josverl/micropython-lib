@@ -386,16 +386,16 @@
     },
     {
       "name": "collections-abc",
-      "version": "1.26.1",
+      "version": "1.0.0",
       "author": "",
-      "description": "",
+      "description": "Collections ABC module for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.26.1"
+          "1.0.0"
         ],
         "6": [
-          "1.26.1"
+          "1.0.0"
         ]
       },
       "path": "python-stdlib/collections-abc"
@@ -1602,32 +1602,32 @@
     },
     {
       "name": "typing",
-      "version": "1.26.1",
+      "version": "1.0.0",
       "author": "",
       "description": "Typing module for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.26.1"
+          "1.0.0"
         ],
         "6": [
-          "1.26.1"
+          "1.0.0"
         ]
       },
       "path": "python-stdlib/typing"
     },
     {
       "name": "typing_extensions",
-      "version": "1.26.1",
+      "version": "1.0.0",
       "author": "",
-      "description": "",
+      "description": "Backport of typing_extensions for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.26.1"
+          "1.0.0"
         ],
         "6": [
-          "1.26.1"
+          "1.0.0"
         ]
       },
       "path": "python-stdlib/typing_extensions"
@@ -2018,5 +2018,5 @@
     }
   ],
   "v": 2,
-  "updated": 1780501931
+  "updated": 1780520017
 }

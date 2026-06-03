@@ -111,4 +111,4 @@ sys.modules["typing_extensions"] = sys.modules["typing"]
 del sys
 
 
-__version__ = '1.26.1'
+__version__ = '1.0.0'
