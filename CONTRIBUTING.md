@@ -131,10 +131,12 @@ Pages](https://docs.github.com/en/pages):
 
 1. Open your fork's repository in the GitHub web interface.
 2. Navigate to "Settings" -> "Secrets and variables" -> "Actions" -> "Variables".
-3. Click "New repository variable"
-4. Create a variable named `MICROPY_PUBLISH_MIP_INDEX` with value `true` (or any
+    - Click "New repository variable"
+    - Create a variable named `MICROPY_PUBLISH_MIP_INDEX` with value `true` (or any
    "truthy" value).
-5. The settings for GitHub Actions and GitHub Pages features should not need to
+5. Navigate to "Settings" -> "Code and Automation" -> "Pages".
+    - Under "Source", select "GitHub Actions". 
+5. Other settings for GitHub Actions and GitHub Pages features should not need to
    be changed from the repository defaults, unless you've explicitly disabled
    Actions or Pages in your fork.
 
