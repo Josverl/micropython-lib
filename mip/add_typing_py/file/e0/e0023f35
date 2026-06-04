@@ -512,4 +512,4 @@ def main(module="__main__", testRunner=None):
     return testRunner.run(suite)
 
 
-__version__ = '0.10.5'
+__version__ = '0.11.0'
