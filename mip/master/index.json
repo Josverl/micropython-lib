@@ -370,16 +370,16 @@
     },
     {
       "name": "collections-defaultdict",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.3.0"
+          "0.4.0"
         ],
         "6": [
-          "0.3.0"
+          "0.4.0"
         ]
       },
       "path": "python-stdlib/collections-defaultdict"
@@ -1122,16 +1122,16 @@
     },
     {
       "name": "operator",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.2.0"
         ],
         "6": [
-          "0.1.1"
+          "0.2.0"
         ]
       },
       "path": "python-stdlib/operator"
@@ -1170,16 +1170,16 @@
     },
     {
       "name": "pathlib",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.0.1"
+          "0.1.0"
         ],
         "6": [
-          "0.0.1"
+          "0.1.0"
         ]
       },
       "path": "python-stdlib/pathlib"
@@ -1298,16 +1298,16 @@
     },
     {
       "name": "requests",
-      "version": "0.10.2",
+      "version": "0.11.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.10.2"
+          "0.11.0"
         ],
         "6": [
-          "0.10.2"
+          "0.11.0"
         ]
       },
       "path": "python-ecosys/requests"
@@ -1618,48 +1618,48 @@
     },
     {
       "name": "umqtt.robust",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": "",
       "description": "Lightweight MQTT client for MicroPython (\"robust\" version).",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.0.2"
+          "1.0.3"
         ],
         "6": [
-          "1.0.2"
+          "1.0.3"
         ]
       },
       "path": "micropython/umqtt.robust"
     },
     {
       "name": "umqtt.simple",
-      "version": "1.7.0",
+      "version": "1.7.1",
       "author": "",
       "description": "Lightweight MQTT client for MicroPython.",
       "license": "MIT",
       "versions": {
         "py": [
-          "1.7.0"
+          "1.7.1"
         ],
         "6": [
-          "1.7.0"
+          "1.7.1"
         ]
       },
       "path": "micropython/umqtt.simple"
     },
     {
       "name": "unittest",
-      "version": "0.10.5",
+      "version": "0.11.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.10.5"
+          "0.11.0"
         ],
         "6": [
-          "0.10.5"
+          "0.11.0"
         ]
       },
       "path": "python-stdlib/unittest"
@@ -1954,5 +1954,5 @@
     }
   ],
   "v": 2,
-  "updated": 1782940671
+  "updated": 1782941192
 }
