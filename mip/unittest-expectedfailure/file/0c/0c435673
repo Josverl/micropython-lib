@@ -27,7 +27,6 @@ if not getattr(unittest, "_expectedfailure_patched", False):
         pass
 
     _orig_handle = unittest._handle_test_exception
-    _orig_result_init = unittest.TestResult.__init__
     _orig_result_add = unittest.TestResult.__add__
 
     # Decorator: run the wrapped test and raise a sentinel exception so the
@@ -49,40 +48,22 @@ if not getattr(unittest, "_expectedfailure_patched", False):
     def _handle_test_exception(current_test, test_result, exc, verbose=True):
         if isinstance(exc, _ExpectedFailure):
             test_result.expectedFailuresNum += 1
-            test_result.expectedFailures.append((current_test, ""))
             if verbose:
                 print(" expected failure")
             return
         if isinstance(exc, _UnexpectedSuccess):
             test_result.unexpectedSuccessesNum += 1
-            test_result.unexpectedSuccesses.append((current_test, ""))
             if verbose:
                 print(" unexpected success")
             return
         return _orig_handle(current_test, test_result, exc, verbose)
 
-    # Extend TestResult.__init__ with the new counters and their detail lists.
-    def _result_init(self):
-        _orig_result_init(self)
-        self.expectedFailuresNum = 0
-        self.unexpectedSuccessesNum = 0
-        self.expectedFailures = []
-        self.unexpectedSuccesses = []
-
-    # Extend TestResult.__add__ so the new counters/lists are aggregated when
+    # Extend TestResult.__add__ so the new counters are aggregated when
     # per-module results are combined (unittest-discover sums results with "+").
     def _result_add(self, other):
         _orig_result_add(self, other)
         self.expectedFailuresNum += other.expectedFailuresNum
         self.unexpectedSuccessesNum += other.unexpectedSuccessesNum
-        # The list attributes may be absent on a result created before this
-        # add-on was imported (e.g. unittest-discover's top-level accumulator).
-        for _name in ("expectedFailures", "unexpectedSuccesses"):
-            _dst = getattr(self, _name, None)
-            if _dst is None:
-                _dst = []
-                setattr(self, _name, _dst)
-            _dst.extend(getattr(other, _name, ()))
         return self
 
     def _was_successful(self):
@@ -123,12 +104,13 @@ if not getattr(unittest, "_expectedfailure_patched", False):
 
     unittest.expectedFailure = expectedFailure
     unittest._handle_test_exception = _handle_test_exception
-    # Class-level defaults so results created before this add-on was imported
-    # (e.g. unittest-discover's accumulator) still expose the counters and can
-    # be combined with "+".
+    # Class-level defaults keep the counters free per-result: no instance
+    # attribute is allocated until a test is actually recorded (an instance
+    # attribute is created on first increment). They also let results created
+    # before this add-on loaded (e.g. discover's accumulator) be read and
+    # combined with "+".
     unittest.TestResult.expectedFailuresNum = 0
     unittest.TestResult.unexpectedSuccessesNum = 0
-    unittest.TestResult.__init__ = _result_init
     unittest.TestResult.__add__ = _result_add
     unittest.TestResult.wasSuccessful = _was_successful
     unittest.TestRunner.run = _runner_run
