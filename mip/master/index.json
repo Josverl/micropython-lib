@@ -194,16 +194,16 @@
     },
     {
       "name": "aiorepl",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "author": "",
       "description": "Provides an asynchronous REPL that can run concurrently with an asyncio, also allowing await expressions.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.2.2"
+          "0.2.3"
         ],
         "6": [
-          "0.2.2"
+          "0.2.3"
         ]
       },
       "path": "micropython/aiorepl"
@@ -383,6 +383,22 @@
         ]
       },
       "path": "python-stdlib/collections-defaultdict"
+    },
+    {
+      "name": "colorsys",
+      "version": "1.0.0",
+      "author": "",
+      "description": "",
+      "license": "MIT",
+      "versions": {
+        "py": [
+          "1.0.0"
+        ],
+        "6": [
+          "1.0.0"
+        ]
+      },
+      "path": "python-stdlib/colorsys"
     },
     {
       "name": "contextlib",
@@ -1090,16 +1106,16 @@
     },
     {
       "name": "ntptime",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "author": "",
       "description": "NTP client.",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.1"
+          "0.2.0"
         ],
         "6": [
-          "0.1.1"
+          "0.2.0"
         ]
       },
       "path": "micropython/net/ntptime"
@@ -1138,16 +1154,16 @@
     },
     {
       "name": "os",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.6.0"
+          "0.7.0"
         ],
         "6": [
-          "0.6.0"
+          "0.7.0"
         ]
       },
       "path": "python-stdlib/os"
@@ -1234,16 +1250,16 @@
     },
     {
       "name": "pprint",
-      "version": "0.0.4",
+      "version": "0.1.0",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.0.4"
+          "0.1.0"
         ],
         "6": [
-          "0.0.4"
+          "0.1.0"
         ]
       },
       "path": "python-stdlib/pprint"
@@ -1298,16 +1314,16 @@
     },
     {
       "name": "requests",
-      "version": "0.11.0",
+      "version": "1.0.2",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.11.0"
+          "1.0.2"
         ],
         "6": [
-          "0.11.0"
+          "1.0.2"
         ]
       },
       "path": "python-ecosys/requests"
@@ -1746,16 +1762,16 @@
     },
     {
       "name": "usb-device-cdc",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": "",
       "description": "",
       "license": "MIT",
       "versions": {
         "py": [
-          "0.1.2"
+          "0.1.3"
         ],
         "6": [
-          "0.1.2"
+          "0.1.3"
         ]
       },
       "path": "micropython/usb/usb-device-cdc"
@@ -1954,5 +1970,5 @@
     }
   ],
   "v": 2,
-  "updated": 1782941192
+  "updated": 1784061809
 }
