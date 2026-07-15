@@ -196,9 +196,8 @@ def skipUnless(cond, msg):
     return skipIf(not cond, msg)
 
 
-# Sentinel exceptions used to tell the two @expectedFailure outcomes apart:
-# a decorated test that raised (expected failure) 
-# versus one that passed (unexpected success).
+# Sentinels for the two @expectedFailure outcomes: a test that raised
+# (expected failure) vs one that passed (unexpected success).
 class _ExpectedFailure(Exception):
     pass
 
@@ -288,8 +287,7 @@ class TestResult:
         self._newFailures = 0
 
     def wasSuccessful(self):
-        # An unexpected success is not a failure or error, 
-        # but (like CPython) it does make the overall run unsuccessful.
+        # An unexpected success isn't a failure/error but still fails the run.
         return self.errorsNum == 0 and self.failuresNum == 0 and self.unexpectedSuccessesNum == 0
 
     def printErrors(self):
