@@ -247,23 +247,19 @@ class TestRunner:
         res.printErrors()
         print("----------------------------------------------------------------------")
         print("Ran %d tests\n" % res.testsRun)
-        infos = []
-        if res.wasSuccessful():
-            status = "OK"
-        else:
-            status = "FAILED"
-            if res.failuresNum > 0:
-                infos.append("failures=%d" % res.failuresNum)
-            if res.errorsNum > 0:
-                infos.append("errors=%d" % res.errorsNum)
-        if res.skippedNum > 0:
-            infos.append("skipped=%d" % res.skippedNum)
-        if res.expectedFailuresNum > 0:
-            infos.append("expected failures=%d" % res.expectedFailuresNum)
-        if res.unexpectedSuccessesNum > 0:
-            infos.append("unexpected successes=%d" % res.unexpectedSuccessesNum)
-        if infos:
-            print("%s (%s)" % (status, ", ".join(infos)))
+        info = []
+        for num, label in (
+            (res.failuresNum, "failures"),
+            (res.errorsNum, "errors"),
+            (res.skippedNum, "skipped"),
+            (res.expectedFailuresNum, "expected failures"),
+            (res.unexpectedSuccessesNum, "unexpected successes"),
+        ):
+            if num:
+                info.append("%s=%d" % (label, num))
+        status = "OK" if res.wasSuccessful() else "FAILED"
+        if info:
+            print("%s (%s)" % (status, ", ".join(info)))
         else:
             print(status)
 
