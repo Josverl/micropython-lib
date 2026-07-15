@@ -198,11 +198,11 @@ def skipUnless(cond, msg):
 
 # Sentinels for the two @expectedFailure outcomes: a test that raised
 # (expected failure) vs one that passed (unexpected success).
-class _ExpectedFailure(Exception):
+class _ExpFail(Exception):
     pass
 
 
-class _UnexpectedSuccess(Exception):
+class _UnexpSucc(Exception):
     pass
 
 
@@ -211,8 +211,8 @@ def expectedFailure(test):
         try:
             test(*args, **kwargs)
         except Exception:
-            raise _ExpectedFailure
-        raise _UnexpectedSuccess
+            raise _ExpFail
+        raise _UnexpSucc
 
     return test_exp_fail
 
@@ -258,10 +258,7 @@ class TestRunner:
             if num:
                 info.append("%s=%d" % (label, num))
         status = "OK" if res.wasSuccessful() else "FAILED"
-        if info:
-            print("%s (%s)" % (status, ", ".join(info)))
-        else:
-            print(status)
+        print("%s (%s)" % (status, ", ".join(info)) if info else status)
 
         return res
 
@@ -331,12 +328,12 @@ def _handle_test_exception(
         test_result.skipped.append((current_test, reason))
         print(" skipped:", reason)
         return
-    if isinstance(exc, _ExpectedFailure):
+    if isinstance(exc, _ExpFail):
         test_result.expectedFailuresNum += 1
         if verbose:
             print(" expected failure")
         return
-    if isinstance(exc, _UnexpectedSuccess):
+    if isinstance(exc, _UnexpSucc):
         test_result.unexpectedSuccessesNum += 1
         if verbose:
             print(" unexpected success")
