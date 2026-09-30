@@ -1,5 +1,6 @@
 """Test cases for the fnmatch module."""
 
+import fnmatch as fnmatch_module
 import unittest
 
 from fnmatch import fnmatch, fnmatchcase, translate, filter
@@ -61,6 +62,24 @@ class FnmatchTestCase(unittest.TestCase):
         self.check_match(b"test", b"te*") # codespell:ignore
         self.check_match(b"test\xff", b"te*\xff") # codespell:ignore
         self.check_match(b"foo\nbar", b"foo*")
+
+    def test_bytes_re15_fallback(self):
+        compile = fnmatch_module.re.compile
+        patterns = []
+
+        def compile_with_fallback(pattern):
+            patterns.append(pattern)
+            if len(patterns) == 1:
+                raise ValueError
+            return compile(pattern)
+
+        fnmatch_module.re.compile = compile_with_fallback
+        try:
+            self.check_match(b"test", b"te*", fn=fnmatchcase)
+        finally:
+            fnmatch_module.re.compile = compile
+
+        self.assertEqual(patterns, [b"(?ms)te.*\\Z", b"te.*$"])
 
 
 class TranslateTestCase(unittest.TestCase):

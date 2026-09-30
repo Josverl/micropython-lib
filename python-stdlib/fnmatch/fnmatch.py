@@ -61,10 +61,13 @@ def _compile_pattern(pat):
         ptn = re.compile(res)
     except ValueError:
         # re1.5 doesn't support all regex features
-        if res.startswith("(?ms)"):
+        prefix = b"(?ms)" if isinstance(res, bytes) else "(?ms)"
+        end = b"\\Z" if isinstance(res, bytes) else "\\Z"
+        line_end = b"$" if isinstance(res, bytes) else "$"
+        if res.startswith(prefix):
             res = res[5:]
-        if res.endswith("\\Z"):
-            res = res[:-2] + "$"
+        if res.endswith(end):
+            res = res[:-2] + line_end
         ptn = re.compile(res)
 
     return ptn.match
